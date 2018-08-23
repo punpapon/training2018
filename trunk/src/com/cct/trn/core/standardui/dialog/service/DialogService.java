@@ -24,9 +24,4 @@ public class DialogService extends AbstractService{
 	public List<CommonDomain> searchListCustomer(DialogSearchCriteria criteria) throws Exception {
 			return dao.search(conn, criteria, user, locale);
 	}
-	
-	
-	
-	
-
 }

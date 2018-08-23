@@ -5,7 +5,7 @@
 	function initDialog() {
 	    jQuery('div'+ divPopup +' #criteriaIds').val(ids);
 	     
-	    document.getElementsByName('criteriaPopup.criteriaKey')[0].value = '';
+	    //document.getElementsByName('criteriaPopup.criteriaKey')[0].value = '';
 	    // ...
 	     
 	    // เรียกใช้งาน function สำหรับการ clear หน้าจอ
@@ -13,17 +13,12 @@
 	     
 	    jQuery.ajax({
 	        type : "POST",
-	        url : "/training2018/jsp/standardui/initForSearchListByIdViewDialog.action",
-	        data : JQuery.param(params),
+	        url : "/training2018/jsp/standardui/initViewDialog.action",
+	        data : null,
 	        async : false,
 	        success : function(data) {
-	            if(data != null){
-	            	initialCriteria(criteriaPopup);
-	            	renderData("popupResult", data.lstResult, data.messagePopup, data.criteriaPopup, true);	            
-	            }
-	            else {
-	            	alert('ไม่พบข้อมูล');
-	            }
+	        	initialCriteria(data.criteriaPopup);
+	          
 	        }
 	    });
 	}
@@ -39,11 +34,11 @@
 	 
 	    jQuery.ajax({
 	        type : "POST",
-	        url : "/training2018/jsp/standardui/searchListDataTable2.action",
+	        url : "/training2018/jsp/standardui/searchListViewDialog.action",
 	        data : jQuery(divPopup + ' :input').serialize(),
 	        async : true,
 	        success : function(data) {
-	            renderData("popupResult", listResult, messagePopup, criteriaPopup, false);
+	            renderData("popupResult", data.lstResult, data.messagePopup, data.criteriaPopup, false);
 	        }
 	    });
 	}
@@ -93,35 +88,6 @@
 				<!-- ================ End Table Template Section ====================== -->
 				 
 				<s:hidden id="criteriaIds" name="criteriaPopup.ids"/>
-				<script type="text/javascript">
-			/* 	<!--crate table -->
-				jQuery('div#popupResult').ready(function(){
-					var table = new Object();
-						table.width = "855";
 			
-					var tOverX = "false"; //scoll ล่าง
-					var tOverY = "true"; //scoll ข้าง
-			
-					if (tOverX == "true") {
-						table.overX = true;
-				    } else {
-				    	table.overX = false;
-					}
-				
-					if  (tOverY == "true") {
-						table.overY = true;
-				    } else {
-				    	table.overY = false;
-					}
-				
-					//1. apply style table
-					genTable('popupResult', table, true);
-					
-					//2. move button popup to div table
-					var buttonPopup = jQuery("#buttonPopup_popupResult");
-					jQuery("#popupResult").append(buttonPopup);
-				}); */
-			
-				</script>
         </div>
 

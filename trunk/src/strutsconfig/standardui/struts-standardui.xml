@@ -55,7 +55,10 @@
 		        <param name="root">model.objectPopup</param>
 		        <param name="ignoreHierarchy">false</param>
 		    </result>
-			   <result name="initialDialog" type="json">
+			    <result name="initialDialog" type="json">
+			        <param name="root">model</param>
+			    </result>
+			    <result name="searchList" type="json">
 			        <param name="root">model</param>
 			        <param name="ignoreHierarchy">false</param>
 			    </result>

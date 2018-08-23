@@ -39,21 +39,24 @@
 	        var tableId = "tableId_divTableAdd";
 	        var index = jQuery('table#'+tableId+' tbody tr').length;    
 	         
-	        var clArr = ["checkbox", "col-width-150px", "col-width-150px", ""];
+	        var clArr = ["checkbox", "col-width-175px", "col-width-175px", "col-width-175px" , "col-width-175px", "col-width-175px", "col-width-175px"];
 	        var elmArr = new Array();
 	        //elemnet 3 element ที่ต้องวาดคือ  input checkbox, hidden deleteFlag, hidden id
-	        elmArr[0] = "<input type='checkbox' id='cnkColumnId' name='cnkColumnId' value='"+ obj.provinceId +"'/>"
+	        elmArr[0] = "<input type='checkbox' id='cnkColumnId' name='cnkColumnId' value='"+ obj.id +"'/>"
 	            + "<input type='hidden' name='hideColumn.lstTableAddDeleteRow["+index+"].deleteFlag' value=''/>"
 	            + "<input type='hidden' name='hideColumn.lstTableAddDeleteRow["+index+"].id' value=''/>"
 	            //other hidden data
-	            + "<input type='hidden' name='hideColumn.lstTableAddDeleteRow["+index+"].provinceId' value='"+ obj.provinceId +"'/>"
-	            + "<input type='hidden' name='hideColumn.lstTableAddDeleteRow["+index+"].provinceCode' value='"+ obj.provinceCode +"'/>"
-	            + "<input type='hidden' name='hideColumn.lstTableAddDeleteRow["+index+"].provinceName' value='"+ obj.provinceName +"'/>";
+	            + "<input type='hidden' name='hideColumn.lstTableAddDeleteRow["+index+"].provinceId' value='"+ obj.fullname +"'/>"
+	            + "<input type='hidden' name='hideColumn.lstTableAddDeleteRow["+index+"].provinceCode' value='"+ obj.sex +"'/>"
+	            + "<input type='hidden' name='hideColumn.lstTableAddDeleteRow["+index+"].provinceName' value='"+ obj.departmentDesc +"'/>";
 	 
 	        //other column 1, 2, 3, ..., n
-	        elmArr[1] = obj.provinceId;
-	        elmArr[2] = obj.provinceCode;
-	        elmArr[3] = obj.provinceName;
+	        elmArr[1] = obj.fullname;
+	        elmArr[2] = obj.sex;
+	        elmArr[3] = obj.departmentDesc;
+	        elmArr[4] = obj.positionDesc;
+	        elmArr[5] = obj.startWorkDate;
+	        elmArr[6] = obj.workStatus;
 	         
 	        //2. create row 
 	        tableCreateTableRow(tableId, clArr, elmArr);
@@ -104,8 +107,9 @@
             var iconPopup ="<a href='javascript:void(0)' onclick='dialogSingleOpen(\"dialog-popup\", 900, 500, true, initDialog, \"chooseRow\", jQuery(\"div#divTableAdd  #idsSelectedRow\").val())'><img src='<s:url value='/images/icon/i_add.png' />'/> เพิ่มข้อมูล</a>";
             jQuery("#headerTable_<s:property value='#divresult[0]'/> .RIGHT").append(iconPopup);
         </script>
-      
-      	<s:include value="/jsp/standardui/datatable/popup.jsp"></s:include>
+      <div id="divId" title="titleName" style="display: none;">
+      		<s:include value="/jsp/standardui/datatable/popup.jsp"></s:include>
+      </div>
    
 </s:form>
 </body>

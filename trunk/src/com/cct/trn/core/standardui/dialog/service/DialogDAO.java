@@ -36,11 +36,11 @@ public class DialogDAO extends AbstractDAO<DialogSearchCriteria, CommonDomain, D
 	protected List<CommonDomain> search(CCTConnection conn,DialogSearchCriteria criteria, CommonUser user, Locale locale) throws Exception {
 		List<CommonDomain> listResult = new ArrayList<CommonDomain>();
 	     
-		/*		int paramIndex = 0;
+			/*	int paramIndex = 0;
 				Object[] params = new Object[1];
-				params[paramIndex++] = criteria.getOrderList();*/
+				params[paramIndex++] = criteria.getOrderList();
 			     
-			  /*  if (criteria.getNavigatePopup().equals("true")) {
+			    if (criteria.getNavigatePopup().equals("true")) {
 			        // กรณีใช้งานแบบมี navigate
 			        params[paramIndex++] = criteria.getStart() - 1;
 			        params[paramIndex++] = criteria.getLinePerPage();
@@ -63,17 +63,21 @@ public class DialogDAO extends AbstractDAO<DialogSearchCriteria, CommonDomain, D
 		        	 stmt = conn.createStatement();	//ติดต่อฐ่านข้อมูล
 		             rst = stmt.executeQuery(sql);	//query ข้อมูล
 					    int i = 1;
-					    if (criteria.getNavigatePopup().equals("true")) {
+					    /*if (criteria.getNavigatePopup().equals("true")) {
 					        i = criteria.getStart();
-					    }		    
+					    }*/		    
 					    while (rst.next()) {        
 					    	Dialog dialog = new Dialog();
 					        dialog.setRownum(i + "."); // สำหรับการ set ค่าลำดับ
-					        dialog.setIdPopup(rst.getString("CUS_ID")); // สำหรับการ set ค่า Id ไว้ที่ attribute กลางของ popup
+					        dialog.setIdPopup(rst.getString("EMPLOYEE_ID")); // สำหรับการ set ค่า Id ไว้ที่ attribute กลางของ popup
 					        // set ResultSet to object ...
 					        DialogSearch result = new DialogSearch();
 					        result.setFullname(StringUtil.nullToString(rst.getString("FULLNAME")));
 					        result.setSex(StringUtil.nullToString(rst.getString("SEX")));
+					        result.setDepartmentDesc(StringUtil.nullToString(rst.getString("DEPARTMENT_NAME")));
+					        result.setPositionDesc(StringUtil.nullToString(rst.getString("POSITION_NAME")));
+					        result.setStartWorkDate(StringUtil.nullToString(rst.getString("START_WORK_DATE")));
+					        result.setWorkStatus(StringUtil.nullToString(rst.getString("WORK_STATUS")));
 					        listResult.add(result);
 					        
 					        i++;

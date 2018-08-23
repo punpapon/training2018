@@ -25,6 +25,9 @@ public class DialogManager extends AbstractManager<DialogSearchCriteria, DialogS
 		return service.searchListCustomer(criteria);
 	}
 	
+	public List<CommonDomain> searchDetail(DialogSearchCriteria criteria) throws Exception {
+		return service.searchListCustomer(criteria);
+	}
 	@Override
 	public List<DialogSearch> search(DialogSearchCriteria criteria)
 			throws Exception {
