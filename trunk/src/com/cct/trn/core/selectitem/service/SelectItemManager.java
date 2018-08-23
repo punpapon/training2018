@@ -174,7 +174,9 @@ public class SelectItemManager extends AbstractManager<Object, Object, Object, O
 	public List<CommonSelectItem> searchUserAutoSelectItem(String term, String limit, String departmentId) throws Exception {
 		return service.searchUserAutoSelectItem(term, limit, departmentId);
 	}
-	
+	public List<CommonSelectItem> searchPositionAutoSelectItem(String term, String limit, String departmentId) throws Exception {
+		return service.searchPositionAutoSelectItem(term, limit, departmentId);
+	}
 	/**
 	 * Combobox Prefix
 	 * @param locale

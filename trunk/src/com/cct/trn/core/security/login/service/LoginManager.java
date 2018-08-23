@@ -3,6 +3,8 @@ package com.cct.trn.core.security.login.service;
 import java.util.List;
 import java.util.Locale;
 
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
 import util.database.CCTConnection;
 
 import com.cct.abstracts.AbstractManager;
@@ -76,4 +78,6 @@ public class LoginManager extends AbstractManager<Object, Object, Object, Common
 	public int updateActive(String ids, String activeFlag) throws Exception {
 		return 0;
 	}
+
+	
 }

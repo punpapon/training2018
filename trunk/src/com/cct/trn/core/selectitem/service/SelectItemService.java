@@ -98,7 +98,9 @@ public class SelectItemService extends AbstractService {
 	protected List<CommonSelectItem> searchUserAutoSelectItem(String term, String limit, String departmentId) throws Exception {
 		return dao.searchUserAutoSelectItem(conn, locale, term, limit, departmentId);
 	}
-
+	protected List<CommonSelectItem> searchPositionAutoSelectItem(String term, String limit, String departmentId) throws Exception {
+		return dao.searchPositionAutoSelectItem(conn, locale, term, limit, departmentId);
+	}
 	/**
 	 * Combobox Prefix
 	 * @param locale

@@ -152,6 +152,7 @@ public class SelectItemDAO extends AbstractDAO<Object, Object, Object, Object, O
 		return listSelectItem;
 	}
 	
+	
 	/**
 	 * ค้นหาข้องมูล AutoComplete User
 	 * @param conn
@@ -198,7 +199,42 @@ public class SelectItemDAO extends AbstractDAO<Object, Object, Object, Object, O
 		}
 		return listSelectItem;
 	}
-
+	protected List<CommonSelectItem> searchPositionAutoSelectItem(CCTConnection conn, Locale locale, String term, String limit, String departmentId) throws Exception {
+		List<CommonSelectItem> listSelectItem = new ArrayList<CommonSelectItem>();
+		
+		int paramIndex = 0;
+		Object[] params = new Object[3];
+		params[paramIndex++] = StringUtil.replaceSpecialString(term, conn.getDbType(), ResultType.NULL);
+		params[paramIndex++] = StringUtil.replaceSpecialString(departmentId, conn.getDbType(), ResultType.NULL);
+		params[paramIndex] = StringUtil.replaceSpecialString(limit, conn.getDbType(), ResultType.NULL);
+		
+		String sql = SQLUtil.getSQLString(
+				conn.getSchemas()
+				, getSqlPath().getClassName()
+				, getSqlPath().getPath()
+				, "searchPositionAutoSelectItem"
+				, params);
+		LogUtil.SELECTOR.debug(sql);
+		
+		Statement stmt = null;
+		ResultSet rst = null;
+		try {
+			stmt = conn.createStatement();
+			rst = stmt.executeQuery(sql);
+			while (rst.next()) {
+				CommonSelectItem selectItem = new CommonSelectItem();
+				selectItem.setKey(StringUtil.nullToString(rst.getString("POSITION_ID")));
+				selectItem.setValue(StringUtil.nullToString(rst.getString("POSITION_NAME")));
+				listSelectItem.add(selectItem);
+			}
+			
+		} catch (Exception e) {
+			throw e;
+		} finally {
+			CCTConnectionUtil.closeAll(rst, stmt);
+		}
+		return listSelectItem;
+	}
 	/**
 	 * @deprecated ไม่ใช้งาน
 	 * */

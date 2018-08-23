@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
 import util.database.CCTConnection;
 import util.log.LogUtil;
 
@@ -51,6 +53,7 @@ public class ProjectManager extends AbstractManager<ProjectSearchCriteria, Proje
 	        } else {
 	            //2.2.ถ้าไม่ใช่ให้ค้นหาข้อมูล
 	            listResult = service.search(criteria);
+	            LogUtil.TRAINING.debug("DATA DATA [" + listResult + "] record.");
 	        }
 		} catch (Exception e) {
 			throw e;
@@ -125,5 +128,7 @@ public class ProjectManager extends AbstractManager<ProjectSearchCriteria, Proje
 	public int updateActive(String ids, String activeFlag) throws Exception {
 		return service.updateActive(conn, ids, activeFlag);
 	}
+
+
 	
 }

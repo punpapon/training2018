@@ -103,7 +103,8 @@ public class LoginDAO extends AbstractDAO<Object, Object, Object, CommonUser, Lo
 			mapOperator.put("10100103", operatorBuilder("10100100", "10100103", "EDIT", "", "F", 3));
 			mapOperator.put("10100104", operatorBuilder("10100100", "10100104", "VIEW", "", "F", 3));
 			mapOperator.put("10100106", operatorBuilder("10100100", "10100106", "CHANGE", "", "F", 3));
-			
+			mapOperator.put("10100107", operatorBuilder("10100100", "10100107", "DELETE", "", "F", 3));
+			mapOperator.put("10100108", operatorBuilder("10100100", "10100108", "DOWNLOAD", "", "F", 3));
 			
 		} catch (Exception e) {
 			throw e;

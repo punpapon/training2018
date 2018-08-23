@@ -18,9 +18,11 @@ public class EmployeeSearchCriteria extends SearchCriteria{
 	private String startWorkDate;
 	private String endWorkDate;
 	private String workStatus;
+	private String remark;
+	
 	
 	public EmployeeSearchCriteria() {
-		HeaderSorts[] arrayHeaderSorts = {
+		/*HeaderSorts[] arrayHeaderSorts = {
 				new HeaderSorts("", HeaderSorts.ASC, "0")
 				, new HeaderSorts("", HeaderSorts.ASC, "0")
 				, new HeaderSorts("", HeaderSorts.ASC, "0")
@@ -32,10 +34,10 @@ public class EmployeeSearchCriteria extends SearchCriteria{
 				, new HeaderSorts("POS.POSITION_ID", HeaderSorts.ASC, "0")
 		};
 		setHeaderSorts(arrayHeaderSorts);
-		setHeaderSortsSize(arrayHeaderSorts.length);
+		setHeaderSortsSize(arrayHeaderSorts.length);*/
 	}
 
-	public void setDefaultHeaderSorts() {
+	/*public void setDefaultHeaderSorts() {
 		for (int i = 0; i < getHeaderSortsSize(); i++) {
 			getHeaderSorts()[0].setOrder(HeaderSorts.ASC);
 			getHeaderSorts()[i].setSeq("");
@@ -43,7 +45,7 @@ public class EmployeeSearchCriteria extends SearchCriteria{
 		getHeaderSorts()[0].setSeq("0");
 		setHeaderSortsSelect("4");
 	}
-	
+	*/
 	public String getPrefixId() {
 		return prefixId;
 	}
@@ -110,5 +112,14 @@ public class EmployeeSearchCriteria extends SearchCriteria{
 	public void setPositionDesc(String positionDesc) {
 		this.positionDesc = positionDesc;
 	}
+
+	public String getRemark() {
+		return remark;
+	}
+
+	public void setRemark(String remark) {
+		this.remark = remark;
+	}
+
 	
 }

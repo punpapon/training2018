@@ -95,12 +95,20 @@ Description :
 searchDepartmentAutoSelectItem {
 	SELECT DEPARTMENT_ID
 		, DEPARTMENT_NAME
-	FROM [SCHEMAS].STD_DEPARTMENT
+	FROM [SCHEMAS].TRN_DEPARTMENT
 	WHERE 1=1
 		AND DEPARTMENT_NAME LIKE CONCAT(%s, '%')		/* DEPARTMENT_NAME */
 	LIMIT %s
 }
 
+/*searchPositionAutoSelectItem {
+	SELECT POSITION_ID
+		, POSITION_NAME
+		FROM [SCHEMAS].TRN_POSITION
+		WHERE 1=1
+			AND POSITION_NAME LIKE CONCAT(%s, '%')	/* POSITION_NAME */
+		LIMIT %s
+}*/
 /*-----------------------------------------------------------------------------------------------------------------------------------------------------------
 SQL : autocomplete ชื่อ-นามสกุล
 Description : 
@@ -116,6 +124,15 @@ searchUserAutoSelectItem {
 	LIMIT %s	
 }
 
+searchPositionAutoSelectItem {
+	SELECT POSITION_ID
+		, POSITION_NAME
+	FROM [SCHEMAS].TRN_POSITION
+	WHERE 1=1		
+		AND POSITION_NAME LIKE CONCAT(%s, '%')
+		AND DEPARTMENT_ID = %s		/* DEPARTMENT_ID */		
+	LIMIT %s	
+}
 /*-----------------------------------------------------------------------------------------------------------------------------------------------------------
 SQL : COMBOBOX_PREFIX_SQL
 Description : 

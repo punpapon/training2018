@@ -1,6 +1,7 @@
 package com.cct.trn.core.tutorial.employee.domain;
 
 import com.cct.common.CommonDomain;
+import com.cct.domain.Transaction;
 
 public class EmployeeSearch extends CommonDomain{
 
@@ -15,6 +16,9 @@ public class EmployeeSearch extends CommonDomain{
 	 private String startWorkDate;
 	 private String endWorkDate;
 	 private String workStatus;
+	 private String remark;
+	 
+	 
 //	, PRE.PREFIX_ID
 //	, PRE.PREFIX_NAME
 //	, CONCAT(NAME, ' ', SURNAME, ' (', NICK_NAME , ')') AS FULLNAME
@@ -68,5 +72,13 @@ public class EmployeeSearch extends CommonDomain{
 	public void setWorkStatus(String workStatus) {
 		this.workStatus = workStatus;
 	}
+	public String getRemark() {
+		return remark;
+	}
+	public void setRemark(String remark) {
+		this.remark = remark;
+	}
+	
+	
 	
 }

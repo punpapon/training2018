@@ -22,6 +22,7 @@ public class EmployeeModel extends CommonModel{
     private List<CommonSelectItem> listSex = new ArrayList<CommonSelectItem>();// เก็บเพศ
     private List<CommonSelectItem> listWorkStatus = new ArrayList<CommonSelectItem>();// เก็บสถานะการทำงาน
 	
+    
     @Override
     public EmployeeSearchCriteria getCriteria() {
     	return criteria;

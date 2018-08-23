@@ -3,6 +3,8 @@ package com.cct.abstracts;
 import java.util.List;
 import java.util.Locale;
 
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
 import util.database.CCTConnection;
 
 import com.cct.common.CommonUser;
@@ -41,6 +43,15 @@ public abstract class AbstractManager<C, R, T, U, L> {
 	 * @throws Exception
 	 */
 	public abstract List<R> search(C criteria) throws Exception;
+
+	/**
+	 * @Desc For Load Edit or View Button
+	 * @param conn
+	 * @param id
+	 * @return
+	 * @throws Exception
+	 */
+	//public abstract XSSFWorkbook export(C criteria) throws Exception;
 
 	/**
 	 * @Desc For Load Edit or View Button

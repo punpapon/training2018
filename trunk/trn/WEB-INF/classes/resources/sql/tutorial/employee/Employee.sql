@@ -43,14 +43,14 @@ searchCount {
 	LEFT JOIN TRN_PREFIX PRE ON EMP.PREFIX_ID = PRE.PREFIX_ID
 	WHERE 1=1
 	AND EMP.ACTIVE = 'Y'
-	AND PRE.PREFIX_ID = &PREFIX_ID
-	AND CONCAT(NAME, ' ', SURNAME) LIKE CONCAT(&FULLNAME, '%')
-	AND NICK_NAME = &NICK_NAME
-	AND EMP.SEX = &SEX
-	AND DEP.DEPARTMENT_ID = 1
-	AND POS.POSITION_ID = 2
-	AND EMP.START_WORK_DATE >= &START_WORK_DATE			          	/* START_DATE '2017-01-20 00:00:00' */
-	AND EMP.START_WORK_DATE <= &START_WORK_DATE				        /* END_DATE '2017-02-25 00:00:00' */
+	AND PRE.PREFIX_ID = %s
+	AND CONCAT(NAME, ' ', SURNAME) LIKE CONCAT(%s, '%')
+	AND NICK_NAME = %s
+	AND EMP.SEX = %s
+	AND DEP.DEPARTMENT_ID = %s
+	AND POS.POSITION_ID = %s
+	AND EMP.START_WORK_DATE >= STR_TO_DATE(%s, '%d/%m/%Y')			          	/* START_DATE '2017-01-20 00:00:00' */
+	AND EMP.START_WORK_DATE <= STR_TO_DATE(%s, '%d/%m/%Y')				        /* END_DATE '2017-02-25 00:00:00' */
 }
 /*-----------------------------------------------------------------------------------------------------------------------------------------------------------
 SQL : ค้นหาข้อมูลพนักงาน_SQL
@@ -66,10 +66,10 @@ searchEmployee {
 	 , DEP.DEPARTMENT_NAME
 	 , POS.POSITION_ID
 	 , POS.POSITION_NAME
-	 , DATE_FORMAT(EMP.START_WORK_DATE ,'%d/%m/%y') AS START_WORK_DATE
-	 , DATE_FORMAT(EMP.END_WORK_DATE ,'%d/%m/%y') AS END_WORK_DATE
+	 , DATE_FORMAT(EMP.START_WORK_DATE ,'%d/%m/%Y') AS START_WORK_DATE
+	 , DATE_FORMAT(EMP.END_WORK_DATE ,'%d/%m/%Y') AS END_WORK_DATE
 	 , EMP.WORK_STATUS
-	 , EMP.CREATE_DATE
+	 , DATE_FORMAT(EMP.CREATE_DATE , '%d/%m/%Y') AS CREATE_DATE 
 	 , EMP.CREATE_USER
 	 , EMP.UPDATE_DATE
 	 , EMP.UPDATE_USER
@@ -86,29 +86,133 @@ searchEmployee {
 	 AND EMP.SEX = %s
 	 AND DEP.DEPARTMENT_ID = %s
 	 AND POS.POSITION_ID = %s
-	 AND EMP.START_WORK_DATE >= %s             /* START_DATE '2017-01-20 00:00:00' */
-	 AND EMP.START_WORK_DATE <= %s           /* END_DATE '2017-02-25 00:00:00' */
+	 AND EMP.START_WORK_DATE >= STR_TO_DATE(%s, '%d/%m/%Y')             /* START_DATE '2017-01-20 00:00:00' */
+	 AND EMP.START_WORK_DATE <= STR_TO_DATE(%s, '%d/%m/%Y')           /* END_DATE '2017-02-25 00:00:00' */
 	 AND EMP.WORK_STATUS = %s
+	 LIMIT %s
+		, %s
+	 
+}
+/*-----------------------------------------------------------------------------------------------------------------------------------------------------------
+SQL : ค้นหาข้อมูลพนักงาน_SQL
+Description : 
+------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+searchEmployeeX {
+	SELECT EMP.EMPLOYEE_ID
+	 , PRE.PREFIX_ID
+	 , PRE.PREFIX_NAME
+	 , CONCAT(NAME, ' ', SURNAME, ' (', NICK_NAME , ')') AS FULLNAME
+	 , EMP.SEX
+	 , DEP.DEPARTMENT_ID
+	 , DEP.DEPARTMENT_NAME
+	 , POS.POSITION_ID
+	 , POS.POSITION_NAME
+	 , DATE_FORMAT(EMP.START_WORK_DATE ,'%d/%m/%Y') AS START_WORK_DATE
+	 , DATE_FORMAT(EMP.END_WORK_DATE ,'%d/%m/%Y') AS END_WORK_DATE
+	 , EMP.WORK_STATUS
+	 , DATE_FORMAT(EMP.CREATE_DATE , '%d/%m/%Y') AS CREATE_DATE 
+	 , EMP.CREATE_USER
+	 , EMP.UPDATE_DATE
+	 , EMP.UPDATE_USER
+	 , EMP.REMARK
+	 FROM TRN_EMPLOYEE EMP
+	 LEFT JOIN TRN_POSITION POS ON POS.POSITION_ID = EMP.POSITION_ID
+	 LEFT JOIN TRN_DEPARTMENT DEP ON DEP.DEPARTMENT_ID = POS.DEPARTMENT_ID
+	 LEFT JOIN TRN_PREFIX PRE ON EMP.PREFIX_ID = PRE.PREFIX_ID
+	 WHERE 1=1 
+}
+/*-----------------------------------------------------------------------------------------------------------------------------------------------------------
+SQL : ค้นหาข้อมูลพนักงาน_SQL
+Description : 
+------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+searchEmployee2 {
+	SELECT EMP.EMPLOYEE_ID
+	 , PRE.PREFIX_ID
+	 , PRE.PREFIX_NAME
+	 , EMP.NAME
+	 , EMP.SURNAME
+	 , EMP.SEX
+	 , DEP.DEPARTMENT_ID
+	 , DEP.DEPARTMENT_NAME
+	 , POS.POSITION_ID
+	 , POS.POSITION_NAME
+	 , DATE_FORMAT(EMP.START_WORK_DATE ,'%d/%m/%Y') AS START_WORK_DATE
+	 , DATE_FORMAT(EMP.END_WORK_DATE ,'%d/%m/%Y') AS END_WORK_DATE
+	 , EMP.WORK_STATUS
+	 , DATE_FORMAT(EMP.CREATE_DATE , '%d/%m/%Y') AS CREATE_DATE 
+	 , EMP.CREATE_USER
+	 , EMP.UPDATE_DATE
+	 , EMP.UPDATE_USER
+	 , EMP.REMARK
+	 FROM TRN_EMPLOYEE EMP
+	 LEFT JOIN TRN_POSITION POS ON POS.POSITION_ID = EMP.POSITION_ID
+	 LEFT JOIN TRN_DEPARTMENT DEP ON DEP.DEPARTMENT_ID = POS.DEPARTMENT_ID
+	 LEFT JOIN TRN_PREFIX PRE ON EMP.PREFIX_ID = PRE.PREFIX_ID
+	 WHERE 1=1 
+	 AND EMP.NAME = %s
+	 AND EMP.SURNAME = %s
+}
+/*-----------------------------------------------------------------------------------------------------------------------------------------------------------
+SQL : ค้นหาข้อมูล Export Excel พนักงาน_SQL
+Description : 
+------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+searchExportEmployee {
+	SELECT EMP.EMPLOYEE_ID
+	 , PRE.PREFIX_ID
+	 , PRE.PREFIX_NAME
+	 , CONCAT(NAME, ' ', SURNAME, ' (', NICK_NAME , ')') AS FULLNAME
+	 , EMP.SEX
+	 , DEP.DEPARTMENT_ID
+	 , DEP.DEPARTMENT_NAME
+	 , POS.POSITION_ID
+	 , POS.POSITION_NAME
+	 , DATE_FORMAT(EMP.START_WORK_DATE ,'%d/%m/%Y') AS START_WORK_DATE
+	 , DATE_FORMAT(EMP.END_WORK_DATE ,'%d/%m/%Y') AS END_WORK_DATE
+	 , EMP.WORK_STATUS
+	 , DATE_FORMAT(EMP.CREATE_DATE , '%d/%m/%Y') AS CREATE_DATE 
+	 , EMP.CREATE_USER
+	 , EMP.UPDATE_DATE
+	 , EMP.UPDATE_USER
+	 , EMP.REMARK
+	 FROM TRN_EMPLOYEE EMP
+	 LEFT JOIN TRN_POSITION POS ON POS.POSITION_ID = EMP.POSITION_ID
+	 LEFT JOIN TRN_DEPARTMENT DEP ON DEP.DEPARTMENT_ID = POS.DEPARTMENT_ID
+	 LEFT JOIN TRN_PREFIX PRE ON EMP.PREFIX_ID = PRE.PREFIX_ID
+	 WHERE 1=1
+	 AND EMP.ACTIVE = 'Y'
+	 AND PRE.PREFIX_ID = %s
+	 AND CONCAT(NAME, ' ', SURNAME) LIKE CONCAT(%s, '%')
+	 AND NICK_NAME = %s
+	 AND EMP.SEX = %s
+	 AND DEP.DEPARTMENT_ID = %s
+	 AND POS.POSITION_ID = %s
+	 AND EMP.START_WORK_DATE >= STR_TO_DATE(%s, '%d/%m/%Y')            /* START_DATE '2017-01-20 00:00:00' */
+	 AND EMP.START_WORK_DATE <= STR_TO_DATE(%s, '%d/%m/%Y')           /* END_DATE '2017-02-25 00:00:00' */
+	 AND EMP.WORK_STATUS = %s
+	 ORDER BY DEP.DEPARTMENT_ID ASC, POS.POSITION_ID DESC
+	 
 }
 /*-----------------------------------------------------------------------------------------------------------------------------------------------------------
 SQL : ตรวจสอบข้อมูลพนักงานซ้ำ_SQL
 Description : 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------*/
-SELECT COUNT(1) AS TOT
-FROM TRN_EMPLOYEE
-WHERE ACTIVE = 'Y'
-AND NAME = &NAME
-AND SURNAME = &SURNAME
-AND NICK_NAME = &NICK_NAME
-AND SEX = &SEX
-AND POSITION_ID = &POSITION_ID
-AND EMPLOYEE_ID <> &EMPLOYEE_ID
-
+searchCountDup {
+	SELECT COUNT(1) AS TOT
+	FROM TRN_EMPLOYEE
+	WHERE ACTIVE = 'Y'
+	AND NAME = %s
+	AND SURNAME = %s
+	AND NICK_NAME = %s
+	AND SEX = %s
+	AND POSITION_ID = %s
+	AND EMPLOYEE_ID <> %s
+	AND WORK_STATUS = %s
+}
 /*-----------------------------------------------------------------------------------------------------------------------------------------------------------
 SQL : เพิ่มข้อมูลพนักงาน_SQL
 Description : 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------*/
-addEmployee {
+insertEmployee {
 	INSERT INTO TRN_EMPLOYEE(
 	  NAME
 	  ,SURNAME
@@ -123,17 +227,18 @@ addEmployee {
 	  ,CREATE_DATE
 	  ,CREATE_USER
 	) VALUES (
-	  &NAME
-	  ,&SURNAME
-	  ,&NICK_NAME
-	  ,&PREFIX_ID
-	  ,&SEX
-	  ,&POSITION_ID
-	  ,&START_WORK_DATE
-	  ,&REMARK
+	  %s
+	  ,%s
+	  ,%s
+	  ,%s
+	  ,%s
+	  ,%s
+	  ,STR_TO_DATE(%s, '%d/%m/%Y')
+	  ,%s
+	  ,%s
 	  ,'Y'
 	  ,CURRENT_TIMESTAMP -- CREATE_DATE - IN DATETIME
-	  ,&USER_ID
+	  ,%s
 	)
 
 }
@@ -154,58 +259,75 @@ AND EMP.EMPLOYEE_ID = &EMPLOYEE_ID
 SQL : ค้นหาข้อมูลพนักงานตามรหัสพนักงาน_SQL
 Description : 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------*/
-SELECT EMP.EMPLOYEE_ID
-, PRE.PREFIX_ID
-, PRE.PREFIX_NAME
-, EMP.NAME
-, EMP.SURNAME
-, EMP.NICK_NAME
-, EMP.SEX
-, DEP.DEPARTMENT_ID
-, DEP.DEPARTMENT_NAME
-, POS.POSITION_ID
-, POS.POSITION_NAME
-, EMP.START_WORK_DATE
-, EMP.END_WORK_DATE
-, EMP.WORK_STATUS
-, EMP.REMARK
-, EMP.CREATE_DATE
-, EMP.CREATE_USER
-, EMP.UPDATE_DATE
-, EMP.UPDATE_USER
-FROM TRN_EMPLOYEE EMP
-LEFT JOIN TRN_POSITION POS ON POS.POSITION_ID = EMP.POSITION_ID
-LEFT JOIN TRN_DEPARTMENT DEP ON DEP.DEPARTMENT_ID = POS.DEPARTMENT_ID
-LEFT JOIN TRN_PREFIX PRE ON EMP.PREFIX_ID = PRE.PREFIX_ID
-WHERE 1=1
-AND EMP.ACTIVE = 'Y'
-AND EMPLOYEE_ID = &EMPLOYEE_ID
-
+searchById {
+	SELECT EMP.EMPLOYEE_ID
+	, PRE.PREFIX_ID
+	, PRE.PREFIX_NAME
+	, EMP.NAME
+	, EMP.SURNAME
+	, EMP.NICK_NAME
+	, EMP.SEX
+	, DEP.DEPARTMENT_ID
+	, DEP.DEPARTMENT_NAME       
+	, POS.POSITION_ID
+	, POS.POSITION_NAME
+	, DATE_FORMAT(EMP.START_WORK_DATE ,'%d/%m/%Y') AS START_WORK_DATE
+	, DATE_FORMAT(EMP.END_WORK_DATE ,'%d/%m/%Y') AS END_WORK_DATE
+	, EMP.WORK_STATUS
+	, EMP.REMARK
+	, EMP.CREATE_DATE
+	, EMP.CREATE_USER
+	, EMP.UPDATE_DATE
+	, EMP.UPDATE_USER
+	FROM TRN_EMPLOYEE EMP
+	LEFT JOIN TRN_POSITION POS ON POS.POSITION_ID = EMP.POSITION_ID
+	LEFT JOIN TRN_DEPARTMENT DEP ON DEP.DEPARTMENT_ID = POS.DEPARTMENT_ID
+	LEFT JOIN TRN_PREFIX PRE ON EMP.PREFIX_ID = PRE.PREFIX_ID
+	WHERE 1=1
+	AND EMP.ACTIVE = 'Y'
+	AND EMPLOYEE_ID = %s
+}
 /*-----------------------------------------------------------------------------------------------------------------------------------------------------------
 SQL : แก้ไขข้อมูลพนักงาน_SQL
 Description : 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------*/
-UPDATE TRN_EMPLOYEE
-SET
-  NAME = &NAME
-  ,SURNAME = &SURNAME
-  ,NICK_NAME = &NICK_NAME
-  ,PREFIX_ID = &PREFIX_ID
-  ,POSITION_ID = &POSITION_ID
-  ,START_WORK_DATE = &START_WORK_DATE
-  ,END_WORK_DATE = &END_WORK_DATE
-  ,WORK_STATUS = &WORK_STATUS
-  ,REMARK = &REMARK
-  ,UPDATE_DATE = CURRENT_TIMESTAMP
-  ,UPDATE_USER = &UPDATE_USER
-WHERE EMPLOYEE_ID = &UPDATE_DATE
-
+updateEmployee {
+	UPDATE TRN_EMPLOYEE
+	SET
+	  NAME = %s
+	  ,SURNAME = %s
+	  ,NICK_NAME = %s
+	  ,PREFIX_ID = %s
+	  ,POSITION_ID = %s
+	  	
+	  ,END_WORK_DATE = STR_TO_DATE(%s, '%d/%m/%Y')
+	  ,WORK_STATUS = %s
+	  ,REMARK = %s
+	  ,UPDATE_DATE = CURRENT_TIMESTAMP
+	  ,UPDATE_USER = %s
+	WHERE EMPLOYEE_ID = %s
+}
 /*-----------------------------------------------------------------------------------------------------------------------------------------------------------
 SQL : ลบข้อมูลพนักงาน_SQL
 Description : 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------*/
-UPDATE TRN_EMPLOYEE SET
-	 ACTIVE = &ACTIVE
-	,UPDATE_DATE = CURRENT_TIMESTAMP
-	,UPDATE_USER = &USER_ID
-WHERE EMPLOYEE_ID IN (&EMPLOYEE_ID)
+deleteEmployee {
+	UPDATE TRN_EMPLOYEE SET
+   ACTIVE = 'N'
+  ,UPDATE_DATE = CURRENT_TIMESTAMP
+  ,UPDATE_USER = %s
+ WHERE EMPLOYEE_ID IN (%s)
+}
+/*-----------------------------------------------------------------------------------------------------------------------------------------------------------
+SQL : ค้นหาข้อมูลไปออก  iReport
+Description : 
+------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+ireportEmployee {
+	SELECT PERSON_ID
+	 , NAME
+	 , LAST_NAME
+	 , AGE	
+	 , DEPARTMENT_ID
+	 FROM PERSON
+	 WHERE 1=1	 
+}

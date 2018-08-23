@@ -78,7 +78,7 @@ public class ComponentAction extends CommonAction implements ModelDriven<Compone
 	public void getComboConGlobal(CCTConnection conn) throws Exception {
 
 		try {
-			model.setLstCarrierTypeSelectItem(SelectItemManager.getMapGlobalData().get(getLocale()).get(GlobalType.CARRIER_TYPE.getValue()));
+	/*		model.setLstCarrierTypeSelectItem(SelectItemManager.getMapGlobalData().get(getLocale()).get(GlobalType.CARRIER_TYPE.getValue()));
 			model.setLstUserTypeSelectItem(SelectItemManager.getMapGlobalData().get(getLocale()).get(GlobalType.USER_TYPE.getValue()));
 			model.setLstLoginTypeSelectItem(SelectItemManager.getMapGlobalData().get(getLocale()).get(GlobalType.LOGIN_TYPE.getValue()));
 			model.setLstCarrierUserStatusSelectItem(SelectItemManager.getMapGlobalData().get(getLocale()).get(GlobalType.CARRIER_USER_STATUS.getValue()));
@@ -99,7 +99,7 @@ public class ComponentAction extends CommonAction implements ModelDriven<Compone
 			model.setLstTypeOfArrivalSelectItem(SelectItemManager.getMapGlobalData().get(getLocale()).get(GlobalType.TYPE_OF_ARRIVAL.getValue()));
 			model.setLstTypeOfDepartureSelectItem(SelectItemManager.getMapGlobalData().get(getLocale()).get(GlobalType.TYPE_OF_DEPARTURE.getValue()));
 			model.setLstActiveStatusSelectItem(SelectItemManager.getMapGlobalData().get(getLocale()).get(GlobalType.ACTIVE_STATUS.getValue()));
-			model.setLstDateUnitSelectItem(SelectItemManager.getMapGlobalData().get(getLocale()).get(GlobalType.DATE_UNIT.getValue()));
+			model.setLstDateUnitSelectItem(SelectItemManager.getMapGlobalData().get(getLocale()).get(GlobalType.DATE_UNIT.getValue()));*/
 
 			// SelectItemManager selectItemManager = new SelectItemManager(conn,
 			// getUser(), getLocale());
@@ -113,10 +113,10 @@ public class ComponentAction extends CommonAction implements ModelDriven<Compone
 
 		try {
 			// model.setLstUserStatusSelectItem(SelectItemManager.getMapGlobalData().get(getLocale()).get(GlobalType.USER_STATUS.getValue()));
-			model.setLstCarrierTypeSelectItem(SelectItemManager.getMapGlobalData().get(getLocale()).get(GlobalType.CARRIER_TYPE.getValue()));
+		/*	model.setLstCarrierTypeSelectItem(SelectItemManager.getMapGlobalData().get(getLocale()).get(GlobalType.CARRIER_TYPE.getValue()));
 			model.setLstUserTypeSelectItem(SelectItemManager.getMapGlobalData().get(getLocale()).get(GlobalType.USER_TYPE.getValue()));
 			model.setLstLoginTypeSelectItem(SelectItemManager.getMapGlobalData().get(getLocale()).get(GlobalType.LOGIN_TYPE.getValue()));
-			model.setLstCarrierStatusSelectItem(SelectItemManager.getMapGlobalData().get(getLocale()).get(GlobalType.CARRIER_STATUS.getValue()));
+			model.setLstCarrierStatusSelectItem(SelectItemManager.getMapGlobalData().get(getLocale()).get(GlobalType.CARRIER_STATUS.getValue()));*/
 			
 			// SelectItemManager selectItemManager = new SelectItemManager(conn,
 			// getUser(), getLocale());

@@ -12,6 +12,7 @@
 		<filter-name>struts2</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
+	
 	<filter>
 		<filter-name>sitemesh</filter-name>
 		<filter-class>com.opensymphony.sitemesh.webapp.SiteMeshFilter</filter-class>
@@ -109,5 +110,15 @@
 	<servlet-mapping>
 		<servlet-name>/userAutoSelectItemServlet</servlet-name>
 		<url-pattern>/userAutoSelectItemServlet</url-pattern>
+	</servlet-mapping>
+	
+	<!-- Position -->
+	<servlet>
+	    <servlet-name>/positionAutoSelectItemServlet</servlet-name>
+	    <servlet-class>com.cct.trn.web.selectitem.servlet.PositionAutoSelectItemServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+	    <servlet-name>/positionAutoSelectItemServlet</servlet-name>
+	    <url-pattern>/positionAutoSelectItemServlet</url-pattern>
 	</servlet-mapping>
 </web-app>

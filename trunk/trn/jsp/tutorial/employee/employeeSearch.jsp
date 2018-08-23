@@ -4,97 +4,159 @@
 
 <html>
 <head>
-
+<s:include value="/jsp/template/jquery-inputdatetimeformat.jsp"/>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <script type="text/javascript">
 
 	function sf() {
-		
 		jQuery("div.tabs").parent().attr("style", "width: 97%; float: left;  margin-left: 20px");
         if(jQuery("[name='criteria.criteriaKey']").val() != ""){
             searchAjax();
         }
-		jQuery("#criteria_beforenameId").autocompletezAjax([{
-			url: "<s:url value='/departmentAutoSelectItemServlet'/>",
-            defaultKey: "",     // กำหนดค่า key ตัวแรกของ Autocomplete
-            defaultValue: ""    // กำหนดค่า value ตัวแรกของ Autocomplete
-        },{
-            inputModelId: 'criteria_spmCode',
-            url: "<s:url value='/userAutoSelectItemServlet'/>",
-            postParamsId: {beforenameId: "criteria_beforenameId"},
-            defaultKey: "",     // กำหนดค่า key ตัวแรกของ Autocomplete
-            defaultValue: ""    // กำหนดค่า value ตัวแรกของ Autocomplete
-        }]);
-		
+
 		jQuery("#criteria_departmentId").autocompletezAjax([{
 			url: "<s:url value='/departmentAutoSelectItemServlet'/>",
             defaultKey: "",     // กำหนดค่า key ตัวแรกของ Autocomplete
             defaultValue: ""    // กำหนดค่า value ตัวแรกของ Autocomplete
         },{
-            inputModelId: 'criteria_spmCode',
-            url: "<s:url value='/userAutoSelectItemServlet'/>",
+            inputModelId: 'criteria_positionId',
+            url: "<s:url value='/positionAutoSelectItemServlet'/>",
             postParamsId: {departmentId: "criteria_departmentId"},
             defaultKey: "",     // กำหนดค่า key ตัวแรกของ Autocomplete
             defaultValue: ""    // กำหนดค่า value ตัวแรกของ Autocomplete
         }]);
 		
 	}
-	function searchPage() {
+	function searchPage() {	
         document.getElementsByName('criteria.criteriaKey')[0].value = '';
         searchAjax();
     }
 	function clearPage() {
 		submitPage("<s:url value='/jsp/tutorial/initEmployee.action' />");
 	}
+	function addPage() {
+		submitPage("<s:url value='/jsp/tutorial/gotoAddEmployee.action' />");
+	}
+	function exportExcel() {
+		submitPage("<s:url value='/jsp/tutorial/exportEmployee.action' />");
+	}
+	function print() {		
+		submitPageReport("<s:url value='/jsp/tutorial/exportEmployee.action' />");	
+	}
+	function report() {
+		submitPageReport("<s:url value='/jsp/tutorial/reportEmployee.action' />");	
+	}
+	function deleteData() {
+		if(!validateSelectOne('criteria.selectedIds')){
+	         return false;
+	     }     
+		if(!confirm("<s:text name='50005X' />")){
+			return false;
+		}
+	     submitPage("<s:url value='/jsp/tutorial/deleteEmployee.action' />");
+	    }
      
     function searchAjax(){
         var aOption = {
             divResultId: "div_datatable",
             tableId: "tableResult",
-            checkbox:"N",
-            urlSearch: "<s:url value='/tutorial/employee/searchEmployee.action' />",
-           /*urlView: {
-                url: "<s:url value='/tutorial/employee/employeeSearch.action' />",
+            checkbox:"Y",
+            urlSearch: "<s:url value='/jsp/tutorial/searchEmployee.action' />",
+            urlEdit: {
+            	url : "<s:url value='/jsp/tutorial/gotoEditEmployee.action' />" ,
+            	authen: "<s:property value='ATH.edit' />"
+            } ,
+            urlView: {
+                url: "<s:url value='/jsp/tutorial/gotoViewEmployee.action' />",
                 authen: "<s:property value='ATH.view' />"
-            },*/
-            pk: "projects.id", //input hidden in footer
+            },
+            pk: "employee.id", //input hidden in footer
+            fixedCoumnsLeft : 6, 
+            fixedCoumnsRight : 0,
+            footerHtml: '<img src="<s:url value='/images/icon/i_deletenew.png' />" height="25" size="100" alt="Johnson Pond" onclick="deleteData()">&nbsp;&nbsp;&nbsp;<img src="<s:url value='/images/menu/report.png' />" height="25" size="100" alt="Johnson Pond" onclick="report()">&nbsp;&nbsp;&nbsp;<img src="<s:url value='/images/menu/i_excel.png' />" height="25" size="100" alt="Johnson Pond" onclick="exportExcel()">',
             createdRowFunc: "manageRow"
         };
          
         var colData = [
 			{ data: null,class: "order", orderable: false, defaultContent: "", "width":"60px"},
 			{ data: null, class: "d_checkbox center", orderable: false, defaultContent: "", "width":"35px"},
+			{ data : null, class: "d_edit center" , orderable: false, defaultContent: "", "width":"35px"},
 			{ data: null, class: "d_view center col_view", orderable: false, defaultContent: "", "width":"35px"},
-			{ data: "code", class: "", "width":"120px"},
-			{ data: "fullname",class: "col-width-auto"},
-			{ data: "sex", class: "", "width":"230px"},
-			{ data: "groupEmp", class: "center", "width":"150px"},
-			{ data: "department",class: "d_status center", "width":"60px"}
+			{ data: "fullname", class: "", "width":"120px"},
+			{ data: "sex",class: "col-width-auto"},
+			{ data: "departmentDesc", class: "", "width":"230px"},
+			{ data: "positionDesc", class: "center", "width":"150px"},
+			{ data: "startWorkDate",class: "center", "width":"60px"},
+			{ data: "endWorkDate" , class: "center", "width":"60px"},
+		 	{ data: "workStatus" , class: "center", "width":"150px"},
+			{ data: "transaction.createUser" , class: "center", "width":"50px"},
+			{ data: "transaction.createDate" , class: "center", "width":"50px"},
+			{ data: "transaction.updateUser" , class: "center", "width":"50px"}, 
+			{ data: "transaction.updateDate", class: "center", "width":"50px"},
+			{ data: "transaction.createRemark", class: "center", "width":"50px"}
 			];
-             
-        dataTable("<%=request.getContextPath()%>", colData, aOption);
+        fixedColumns("<%=request.getContextPath()%>", colData , aOption);
+        <%-- dataTable("<%=request.getContextPath()%>", colData, aOption); --%>
     }
-    function clearPage() {
-        submitPage("<s:url value='/tutorial/initEmployee.action' />");
+    /**
+     * ใช้สำหรับ submit กรณีเพิ่ม, แก้ไข, แสดง
+     * ต้องใช้ร่วมกับไฟล์ inputmethod.js
+     * @param action
+     * @param emName (hidden name ของ id ใน model)
+     * @param valId
+     */
+    function submitAction(action, elName, valId){
+        if(valId != null && valId != ""){
+            document.getElementsByName(elName)[0].value = valId;
+        }
+        submitPage(action);
     }
-    function manageRow(row, data) {
-        jQuery(".code", row).html("<span title='"+data.fullThaiName+"'>"+data.thaiName+"</span>");
-        jQuery(".documentType", row).html("<span title='"+data.fullDocumentType+"'>"+data.documentType+"</span>");
-        jQuery(".engName", row).html("<span title='"+data.fullEngName+"'>"+data.engName+"</span>");
+    function manageRow(row, data) { 	
+        var htmlIconView = "";
+        
+        /*     
+         *  เมื่อวาดตารางเสร็จแล้วต้องการเปลี่ยนแปลงหรือจัดการกับข้อมูลในตารางต้องมาทำใน function managerRow
+        */          
+                //Select F,M
+        var gender = jQuery(row).find("td").eq(5).html();
+        	if(gender === "M"){
+            jQuery(row).find("td").eq(5).html("Male");
+           } if(gender === "F") {
+            jQuery(row).find("td").eq(5).html("Female");
+           }
+           
+         var statusWork = jQuery(row).find("td").eq(10).html();
+        	if(statusWork == "R"){
+        		jQuery(row).find("td").eq(10).html("พนังงานทดลองงาน");
+        	}
+        	if(statusWork == "C"){
+        		jQuery(row).find("td").eq(10).html("พนังงานปัจจุบัน");
+        	}
+        	if(statusWork == "T"){
+        		jQuery(row).find("td").eq(10).html("อดีตพนักงาน");
+        	} 
+        	
+		 if(data.workStatus == "X") {
+			
+			 htmlIconView = jQuery("#tempIconEditDisable").html(); 
+		} 
+		 else
+			 {
+			 	htmlIconView = jQuery("#tempIconEditEnable").html(); 
+			 }
+		jQuery(row).find("td").eq(2).html(htmlIconView); 
     }
 	$(function(){
-		jQuery("#criteria_startDate").input_dateformat({
+		jQuery("#criteria_startWorkDate").input_dateformat({
 			dateformat : "dd_sl_mm_sl_yyyy" ,
 			selectDateRange: { 
-	            dateTo: "criteria_startDateTo" // กำหนดวันที่สิ้นสุด
+	            dateTo: "criteria_endWorkDate" // กำหนดวันที่สิ้นสุด
 	        }
 	    });
-		jQuery("#criteria_startDateTo").input_dateformat({
+		jQuery("#criteria_endWorkDate").input_dateformat({
 			dateformat : "dd_sl_mm_sl_yyyy" ,
 			selectDateRange: {
-				dateFrom: "criteria_startDate" ,
-				getValue: "criteria_startDate" ,
-				
+				dateFrom: "criteria_startWorkDate" 	// กำหนดวันเริ่มต้น	
 			} 
 		});
 	});
@@ -146,7 +208,7 @@
 						<s:text name="emp.nameEmp" />
 					</td>
 					<td class="VALUE">
-						<s:textfield id="criteria_nameEmp" name="criteria.nameEmp" maxlength="100" cssClass="combox" />
+						<s:textfield id="criteria_fullname" name="criteria.fullname" maxlength="120" cssClass="combox" />
 					</td>					
 					<td class="BORDER"></td>
 				</tr>
@@ -156,7 +218,7 @@
 						<s:text name="emp.nickname" />
 					</td>
 					<td class="VALUE">
-						<s:textfield id="criteria_nicknameEmp" name="criteria.nicknameEmp" maxlength="100" cssClass="combox" />
+						<s:textfield id="criteria_nickname" name="criteria.nickname" maxlength="120" cssClass="combox" />
 					</td>
 					<td class="LABEL">
 						<s:text name="emp.sex" /><em>&nbsp;&nbsp;</em>
@@ -170,6 +232,7 @@
 							listValue="value"
 							cssClass = "combox"
 							/>
+						
 					</td>		
 					<td class="BORDER"></td>
 				</tr>
@@ -179,16 +242,16 @@
 						<s:text name="emp.groupEmp" />
 					</td>
 					<td class="VALUE">
-							<s:textfield id="criteria_departmentId" name="criteria.departmentId" code-of="criteria_departmentId_autocomplete" cssClass="autocomplete" />
-							<s:textfield id="criteria_departmentName" name="criteria.departmentName" text-of="criteria_departmentId_autocomplete" cssClass="autocomplete" />
+							<s:textfield id="criteria_departmentId" name="criteria.departmentId" code-of="criteria_department_autocomplete" cssClass = "autocomplete"/>
+							<s:textfield id="criteria_departmentDesc" name="criteria.departmentDesc" text-of="criteria_department_autocomplete" cssClass = "autocomplete" />
 				
 					</td>
 					<td class="LABEL">
 						<s:text name="emp.department"/>
 					</td>
 					<td class="VALUE">
-							<s:textfield id="criteria_spmCode" name="criteria.spmCode" code-of="criteria_spmCode_autocomplete" cssClass="autocomplete" />
-							<s:textfield id="criteria_spmName" name="criteria.spmName" text-of="criteria_spmCode_autocomplete" cssClass="autocomplete" />
+							<s:textfield id="criteria_positionId" name="criteria.positionId" code-of="criteria_position_autocomplete" cssClass = "autocomplete" />
+							<s:textfield id="criteria_positionDesc" name="criteria.positionDesc" text-of="criteria_position_autocomplete" cssClass = "autocomplete"/>
 				</td>
 					<td class="BORDER"></td>
 				</tr>
@@ -198,13 +261,13 @@
 						<s:text name="emp.startdate" />
 					</td>
 					<td class="VALUE">
-						<s:textfield id="criteria_startDate" name="criteria.startDate" maxlength="100" cssClass="input_datapicker"/>
+						<s:textfield id="criteria_startWorkDate" name="criteria.startWorkDate" maxlength="200" cssClass="input_datapicker"/>
 					</td>
 					<td class="LABEL">
 						<s:text name="emp.startDateTo" />
 					</td>
 					<td class="VALUE">
-						<s:textfield id="criteria_startDateTo" name="criteria.startDateTo" maxlength="100" cssClass="input_datapicker"/>
+						<s:textfield id="criteria_endWorkDate" name="criteria.endWorkDate" maxlength="200" cssClass="input_datapicker"/>
 					</td>
 					<td class="BORDER"></td>
 				</tr>
@@ -220,6 +283,7 @@
 							headerValue="" 
 							listKey="key" 
 							listValue="value"
+							cssClass = "combox"
 							/>
 						</td>
 						<td class="LABEL">
@@ -232,9 +296,16 @@
 					</tr>
 			
 			</table>
+			
 				 <s:include value="/jsp/template/button.jsp">
 					<s:param name="buttonType" value="%{'search,enable'}" />
 				</s:include> 
+				<s:include value="/jsp/template/button.jsp">
+					<s:param name="buttonType" value="%{'report,enable'}" />
+				</s:include> 
+			
+				
+			
 		</div>
 	</div>
 		
@@ -249,28 +320,42 @@
                 <thead>
                     <tr>
                         <th><s:text name="emp.code"/></th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
+                        <th><input id="criteria_selectedIds" type="checkbox" name="criteria.selectedIds" onClick="checkboxToggle('criteria.selectedIds',this.checked)" /></th>
+                        <th></th> 
+                        <th></th>                   
                         <th><s:text name="emp.nameEmp"/></th>
                         <th><s:text name="emp.sex"/></th>
                         <th><s:text name="emp.groupEmp"/></th>
                         <th><s:text name="emp.department"/></th>
-                        
+                                         
+                        <th><s:text name="emp.startWorkDate"/></th>
+                        <th><s:text name="emp.endWorkDate"/></th>
+                        <th><s:text name="emp.statusWork" /></th>
+                        <th><s:text name="emp.createUser"/></th>
+                        <th><s:text name="emp.createdate"/></th>
+                        <th><s:text name="emp.updateUser"/></th>
+                        <th><s:text name="emp.updateDate" /></th>
+                        <th><s:text name="emp.remark" /></th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td colspan="8" class="dataTables_empty">Loading data from server</td>
+                        <td colspan="16" class="dataTables_empty">Loading data from server</td>
                     </tr>
-                </tbody>
-            </table>
-        </div>
+                </tbody>  
+            </table>            
+       	</div>
    	</div>
-	   	
+       	
+		<div id="tempIconEditDisable" style="display: none;">
+			<a href="javascript:void(0)" >
+			    <img src="<s:url value='/images/icon/i_edit_dis.png' />" border="0">
+			</a>
+		</div>
    	<!--------------------------------------- include --------------------------------------->
-   	 <s:include value="/jsp/template/hiddenSearchForDatatable.jsp" />
-   	<s:hidden name="projects.id" />
+   	 <s:hidden><s:include value="/jsp/template/hiddenSearchForDatatable.jsp" /></s:hidden>
+   	
+   	<s:hidden name="employee.id" />
    	<s:token />
    	<!--------------------------------------- include --------------------------------------->
 	

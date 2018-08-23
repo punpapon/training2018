@@ -13,7 +13,7 @@ public enum PFCode {
 	// SEC
 
 	TUR_PROJECTS("10600100", "{'" + FunctionType.SEARCH + "':'10600101', '" + FunctionType.ADD + "':'10600102','" + FunctionType.EDIT + "':'10600103','" + FunctionType.VIEW + "':'10600104','" + FunctionType.CHANGE + "':'10600105'}")
-	, TRN_EMPLOYEE("10100100", "{'" + FunctionType.SEARCH + "':'10100101', '" + FunctionType.ADD + "':'10100102','" + FunctionType.EDIT + "':'10100103','" + FunctionType.VIEW + "':'10100104','" + FunctionType.CHANGE + "':'10100106'}")
+	, TRN_EMPLOYEE("10100100", "{'" + FunctionType.SEARCH + "':'10100101', '" + FunctionType.ADD + "':'10100102','" + FunctionType.EDIT + "':'10100103','" + FunctionType.VIEW + "':'10100104','" + FunctionType.EXPORT + "':'10100108','"+ FunctionType.CHANGE + "':'10100106'}" + FunctionType.DELETE + "':'10100107'}" )
 	
 	;
 	// ---------: Program code and Function code :-----------

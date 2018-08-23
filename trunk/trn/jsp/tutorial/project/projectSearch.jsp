@@ -79,11 +79,12 @@
     }
 	
 	function manageRow(row, data) {
+		console.log(data);
 		var isView = "<s:property value='ATH.view'/>";
 		var htmlIconView = "";
 		if (isView) {
 			htmlIconView = jQuery("#tempIconViewEnable").html();
-			htmlIconView = htmlIconView.replace("xxx", data.id);
+			htmlIconView = htmlIconView.replace("xxx", project.id);
 			
 		} else {
 			htmlIconView = jQuery("#tempIconViewDisable").html();
@@ -91,7 +92,7 @@
 		}
 		
 // 		console.log(htmlIconView)
-		jQuery(row).find("td").eq(3).html(htmlIconView);
+		jQuery(row).find("td").eq(3).html(	);
 
 	}
 	

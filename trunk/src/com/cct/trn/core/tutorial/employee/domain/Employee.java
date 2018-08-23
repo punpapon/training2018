@@ -5,17 +5,22 @@ import com.cct.common.CommonDomain;
 public class Employee extends CommonDomain{
 
 	private static final long serialVersionUID = -5377136574847222390L;
+		private String employeeId;
 		private String prefixId;
-		private String fullname;
-		private String nickname;
+		private String prefixName;
+		private String name;
+		private String lastName;
+		private String fullName;
+		private String nickName;
 		private String sex;
 		private String departmentId;
+		private String departmentDesc;
 		private String positionId;
+		private String positionDesc;
 		private String startWorkDate;
 		private String endWorkDate;
 		private String workStatus;
-		
-		
+		private String remark;
 		
 		public String getPrefixId() {
 			return prefixId;
@@ -23,18 +28,7 @@ public class Employee extends CommonDomain{
 		public void setPrefixId(String prefixId) {
 			this.prefixId = prefixId;
 		}
-		public String getFullname() {
-			return fullname;
-		}
-		public void setFullname(String fullname) {
-			this.fullname = fullname;
-		}
-		public String getNickname() {
-			return nickname;
-		}
-		public void setNickname(String nickname) {
-			this.nickname = nickname;
-		}
+		
 		public String getSex() {
 			return sex;
 		}
@@ -71,5 +65,59 @@ public class Employee extends CommonDomain{
 		public void setWorkStatus(String workStatus) {
 			this.workStatus = workStatus;
 		}
+		public String getEmployeeId() {
+			return employeeId;
+		}
+		public void setEmployeeId(String employeeId) {
+			this.employeeId = employeeId;
+		}
 		
+		public String getRemark() {
+			return remark;
+		}
+		public void setRemark(String remark) {
+			this.remark = remark;
+		}
+		public String getName() {
+			return name;
+		}
+		public void setName(String name) {
+			this.name = name;
+		}
+		public String getLastName() {
+			return lastName;
+		}
+		public void setLastName(String lastName) {
+			this.lastName = lastName;
+		}
+		public String getFullName() {
+			return fullName;
+		}
+		public void setFullName(String fullName) {
+			this.fullName = fullName;
+		}
+		public String getNickName() {
+			return nickName;
+		}
+		public void setNickName(String nickName) {
+			this.nickName = nickName;
+		}
+		public String getDepartmentDesc() {
+			return departmentDesc;
+		}
+		public void setDepartmentDesc(String departmentDesc) {
+			this.departmentDesc = departmentDesc;
+		}
+		public String getPositionDesc() {
+			return positionDesc;
+		}
+		public void setPositionDesc(String positionDesc) {
+			this.positionDesc = positionDesc;
+		}
+		public String getPrefixName() {
+			return prefixName;
+		}
+		public void setPrefixName(String prefixName) {
+			this.prefixName = prefixName;
+		}		
 	}

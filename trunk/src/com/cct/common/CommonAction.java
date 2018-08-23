@@ -179,6 +179,7 @@ public class CommonAction extends ActionSupport implements Serializable {
 		, HOME("home")
 		, THIS(null)
 		, VIEW("view")
+		, DELETE("delete")
 		, SEARCH_AJAX("searchResultAjax")
 		, LOGIN("login")
 		, PROFILE("profile");
@@ -1249,7 +1250,7 @@ public class CommonAction extends ActionSupport implements Serializable {
 		log.info("exportExcelFile");
 		try {
 			HttpServletResponse response = ServletActionContext.getResponse();
-			response.setContentType("application/octet-stream");
+			response.setContentType("application/octet-stream");			
 			response.setHeader("Content-Disposition", "attachment; filename=" + fileName);
 			OutputStream os = response.getOutputStream();
 			workbook.write(os);

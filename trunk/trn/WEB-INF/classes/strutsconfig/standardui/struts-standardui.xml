@@ -40,6 +40,29 @@
 		
 		<action name="*DataTable" class="com.cct.trn.web.standardui.datatable.action.DataTableAction" method="{1}">
 			<result name="init">/jsp/standardui/datatable/initDataTable.jsp</result>
+			<result name="search">/jsp/standardui/datatable/initDataTable.jsp</result>
+			   <result name="initialDialog" type="json">
+			        <param name="root">model</param>
+			        <param name="ignoreHierarchy">false</param>
+			    </result>
+			    <result name="searchListById" type="json">
+			        <param name="root">model</param>
+			        <param name="ignoreHierarchy">false</param>
+			    </result>
+		</action>
+		<action name="*ViewDialog" class="com.cct.trn.web.standardui.datatable.action.CustomerDialogAction" method="{1}">
+		     <result name="searchDetail" type="json">
+		        <param name="root">model.objectPopup</param>
+		        <param name="ignoreHierarchy">false</param>
+		    </result>
+			   <result name="initialDialog" type="json">
+			        <param name="root">model</param>
+			        <param name="ignoreHierarchy">false</param>
+			    </result>
+			    <result name="searchListById" type="json">
+			        <param name="root">model</param>
+			        <param name="ignoreHierarchy">false</param>
+			    </result>
 		</action>
 		
 		<action name="*Dialog" class="com.cct.trn.web.standardui.dialog.action.DialogAction" method="{1}">
